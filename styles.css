@@ -4,21 +4,25 @@
 
 /* 1. Color and Font Variables */
 :root {
-    /* Light Mode - Inspired by your profile picture */
-    --bg-color: #f5f2ed;      /* A warm, creamy off-white from the wall */
-    --text-primary: #433a3f;  /* A dark, rich brown from your hair */
-    --text-secondary: #a1887f;/* A muted taupe from your jacket */
-    --accent-color: #d4acac;   /* A dusty rose from your shirt */
-    --divider-color: #e8e2dc; /* A very light, soft beige */
-    --spotlight-color: rgba(212, 172, 172, 0.15); /* Transparent dusty rose */
+    /* Light Mode - "Subtle Slate" Theme */
+    --bg-color: #f8f9fa;      /* A very clean, bright off-white */
+    --text-primary: #2d3748;  /* A strong, dark slate for titles (high contrast) */
+    --text-secondary: #4a5568;/* A clear, medium-dark gray for text (high contrast) */
+    --accent-color: #667eea;   /* A muted, classic indigo-blue */
+    --divider-color: #e2e8f0; /* A light, neutral gray */
+    --spotlight-color: rgba(102, 126, 234, 0.1); /* Transparent indigo */
+    --shadow-color: rgba(102, 126, 234, 0.2); /* A soft shadow color */
 
-    /* Dark Mode - A complementary, muted theme */
-    --bg-color-dark: #2a2426;      /* A deep, desaturated brown */
-    --text-primary-dark: #f5f2ed;  /* The creamy off-white becomes primary text */
-    --text-secondary-dark: #d4acac;/* The dusty rose becomes secondary text */
-    --accent-color-dark: #c4b3a9;  /* A lighter, muted beige for accents */
-    --divider-color-dark: #3f383b; /* A subtle, dark brown */
-    --spotlight-color-dark: rgba(196, 179, 169, 0.1); /* Transparent light beige */
+
+    /* Dark Mode - A complementary, deep slate theme */
+    --bg-color-dark: #1a202c;      /* A deep, dark slate, almost black */
+    --text-primary-dark: #edf2f7;  /* A clean, off-white for titles */
+    --text-secondary-dark: #a0aec0;/* A light, clear gray for text */
+    --accent-color-dark: #7f9cf5;  /* A slightly brighter indigo for dark mode */
+    --divider-color-dark: #2d3748; /* The primary light text color becomes the divider */
+    --spotlight-color-dark: rgba(127, 156, 245, 0.08); /* Transparent bright indigo */
+    --shadow-color-dark: rgba(127, 156, 245, 0.15); /* A soft shadow color for dark mode */
+
     
     --main-font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
 }
@@ -295,10 +299,24 @@ body.dark .project-nav-item a.active {
     opacity: 1;
 }
 
+/* UPDATED: Project Image Depth Effect */
 .project-image {
     border-radius: 0.5rem;
     width: 100%;
     display: block;
     object-fit: cover;
     margin-bottom: 1.5rem;
+    /* Add transition for the new effects */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+}
+
+/* When the project detail item is visible/active, lift the image */
+.project-detail-item.is-visible .project-image {
+    transform: scale(1.02);
+    box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
+}
+
+body.dark .project-detail-item.is-visible .project-image {
+    box-shadow: 0 10px 15px -3px var(--shadow-color-dark), 0 4px 6px -2px var(--shadow-color-dark);
 }
