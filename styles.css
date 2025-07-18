@@ -24,12 +24,13 @@
     --shadow-color-dark: rgba(143, 188, 143, 0.15); /* A soft shadow color for dark mode */
 
     
-    --main-font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+    --font-serif: 'Lora', serif;
+    --font-sans: 'Source Sans 3', sans-serif;
 }
 
 /* 2. Base Styles */
 body {
-    font-family: var(--main-font);
+    font-family: var(--font-sans);
     background-color: var(--bg-color);
     color: var(--text-secondary);
     line-height: 1.6;
@@ -70,6 +71,7 @@ body.dark::before {
 }
 
 h1, h2, h3 {
+    font-family: var(--font-serif);
     color: var(--text-primary);
     font-weight: 700;
 }
@@ -79,7 +81,7 @@ body.dark h1, body.dark h2, body.dark h3 {
 
 a {
     color: var(--accent-color);
-    font-weight: 500;
+    font-weight: 600; /* Bolder links with sans-serif */
     text-decoration: none;
     transition: color 0.2s;
 }
