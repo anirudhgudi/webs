@@ -101,8 +101,8 @@ a:hover {
 /* 4. Component Styles */
 .profile-image-container {
     position: relative;
-    width: 10rem;
-    height: 10rem;
+    width: 10rem; /* Increased from 8rem */
+    height: 10rem; /* Increased from 8rem */
     margin: 0 auto 1.5rem auto;
     cursor: pointer;
 }
@@ -115,6 +115,7 @@ a:hover {
     height: 100%;
     border-radius: 9999px;
     transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+    object-fit: cover; /* Ensures image covers the area without distortion */
 }
 
 .profile-image.funny {
@@ -307,10 +308,9 @@ body.dark .project-nav-item a.active {
     margin-bottom: 1.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    /* NEW: Suggests the browser prioritize quality when scaling images */
-    image-rendering: -webkit-optimize-contrast; /* For older Chrome/Safari */
-    image-rendering: crisp-edges; /* For Firefox */
-    image-rendering: high-quality; /* For modern browsers */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: high-quality;
 }
 
 .project-detail-item.is-visible .project-image {
@@ -319,5 +319,62 @@ body.dark .project-nav-item a.active {
 }
 
 body.dark .project-detail-item.is-visible .project-image {
+    box-shadow: 0 10px 15px -3px var(--shadow-color-dark), 0 4px 6px -2px var(--shadow-color-dark);
+}
+
+/* NEW: Project Link Buttons */
+.project-links {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.project-link-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--divider-color);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    transition: background-color 0.2s, color 0.2s;
+}
+.project-link-button:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    text-decoration: none;
+}
+body.dark .project-link-button {
+    background-color: var(--divider-color-dark);
+    color: var(--text-secondary-dark);
+}
+body.dark .project-link-button:hover {
+    background-color: var(--accent-color-dark);
+    color: var(--bg-color-dark);
+}
+
+/* NEW: Photography Section */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+}
+
+.photo-item:hover img {
+    transform: scale(1.03);
+    box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
+}
+body.dark .photo-item:hover img {
     box-shadow: 0 10px 15px -3px var(--shadow-color-dark), 0 4px 6px -2px var(--shadow-color-dark);
 }
