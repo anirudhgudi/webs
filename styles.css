@@ -299,19 +299,20 @@ body.dark .project-nav-item a.active {
     opacity: 1;
 }
 
-/* UPDATED: Project Image Depth Effect */
 .project-image {
     border-radius: 0.5rem;
     width: 100%;
     display: block;
     object-fit: cover;
     margin-bottom: 1.5rem;
-    /* Add transition for the new effects */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    /* NEW: Suggests the browser prioritize quality when scaling images */
+    image-rendering: -webkit-optimize-contrast; /* For older Chrome/Safari */
+    image-rendering: crisp-edges; /* For Firefox */
+    image-rendering: high-quality; /* For modern browsers */
 }
 
-/* When the project detail item is visible/active, lift the image */
 .project-detail-item.is-visible .project-image {
     transform: scale(1.02);
     box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
