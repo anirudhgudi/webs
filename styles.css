@@ -12,7 +12,7 @@
     --divider-color: #e9e7e3;
     --shadow-color: rgba(74, 93, 80, 0.2);
     --star-color: rgba(74, 93, 80, 0.7);
-    --spotlight-color: rgba(0, 0, 0, 0.04);
+    --spotlight-color: rgba(80, 75, 65, 0.025);
 
     /* Dark Mode - A complementary, deep forest theme */
     --bg-color-dark: #242b27;
@@ -22,7 +22,7 @@
     --divider-color-dark: #3a443e;
     --shadow-color-dark: rgba(143, 188, 143, 0.15);
     --star-color-dark: rgba(143, 188, 143, 0.7);
-    --spotlight-color-dark: rgba(255, 255, 255, 0.05);
+    --spotlight-color-dark: rgba(160, 230, 150, 0.025);
 
     --font-serif: 'Lora', serif;
     --font-sans: 'Source Sans 3', sans-serif;
