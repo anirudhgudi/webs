@@ -38,79 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             applyTheme(e.matches ? 'dark' : 'light');
         }
     });
-
-    // --- Constellation Effect ---
-    const canvas = document.getElementById('constellation-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    function createParticles() {
-        particles = [];
-        const particleCount = Math.floor(canvas.width * canvas.height / 10000);
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                radius: Math.random() * 1.5,
-            });
-        }
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const isDark = body.classList.contains('dark');
-        const particleColor = isDark ? 'rgba(143, 188, 143, 0.5)' : 'rgba(74, 93, 80, 0.5)';
-        ctx.fillStyle = particleColor;
-        ctx.strokeStyle = particleColor;
-
-        particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fill();
-        });
-
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < 100) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.lineWidth = 0.5 * (1 - dist / 100);
-                    ctx.stroke();
-                }
-            }
-        }
-
-        requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', () => {
-        resizeCanvas();
-        createParticles();
-    });
-
-    resizeCanvas();
-    createParticles();
-    animate();
-
+    
     // --- Project Logbook Scroll Sync ---
     const projectNavLinks = document.querySelectorAll('.project-nav-item a');
     const projectDetails = document.querySelectorAll('.project-detail-item');
@@ -139,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     projectDetails.forEach(detail => observer.observe(detail));
 
-    // --- NEW: Project Slideshow Logic ---
+    // --- Project Slideshow Logic ---
     const sliders = document.querySelectorAll('.project-media-slider');
     sliders.forEach(slider => {
         const slides = slider.querySelectorAll('.slide');
