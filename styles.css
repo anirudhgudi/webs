@@ -13,7 +13,7 @@
     --shadow-color: rgba(74, 93, 80, 0.2);
     --star-color: rgba(74, 93, 80, 0.7);
     /* Spotlight color for light theme */
-    --spotlight-color: rgba(30, 35, 35, 0.02);
+    --spotlight-color: rgba(0, 0, 0, 0.04);
 
 
     /* Dark Mode - A complementary, deep forest theme */
@@ -25,7 +25,7 @@
     --shadow-color-dark: rgba(143, 188, 143, 0.15);
     --star-color-dark: rgba(143, 188, 143, 0.7);
     /* Spotlight color for dark theme */
-    --spotlight-color-dark: rgba(155, 220, 220, 0.025);
+    --spotlight-color-dark: rgba(255, 255, 255, 0.05);
 
 
     --font-serif: 'Lora', serif;
@@ -60,20 +60,19 @@ body::after {
     height: 100vh;
     z-index: 0;
     pointer-events: none;
-    background: radial-gradient(circle 200px at var(--cursor-x, -300px) var(--cursor-y, -300px),
+    background: radial-gradient(circle 350px at var(--cursor-x, -500px) var(--cursor-y, -500px),
             var(--spotlight-color) 0%,
-            transparent 60%);
+            transparent 80%);
     transition: background 0.2s ease-out;
 }
 
 body.dark::after {
-    background: radial-gradient(circle 200px at var(--cursor-x, -300px) var(--cursor-y, -300px),
+    background: radial-gradient(circle 350px at var(--cursor-x, -500px) var(--cursor-y, -500px),
             var(--spotlight-color-dark) 0%,
-            transparent 60%);
+            transparent 80%);
 }
 
-/* Grid background animation for dark mode */
-.grid-background {
+#shooting-stars-canvas {
     position: fixed;
     top: 0;
     left: 0;
@@ -81,29 +80,6 @@ body.dark::after {
     height: 100%;
     z-index: -1;
     pointer-events: none;
-    background-size: 50px 50px;
-    background-image:
-        linear-gradient(to right, var(--divider-color-dark) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--divider-color-dark) 1px, transparent 1px);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-body.dark .grid-background {
-    opacity: 0.05;
-    animation: grid-fade 2s ease-out;
-}
-
-@keyframes grid-fade {
-    0% {
-        opacity: 0;
-        background-size: 45px 45px;
-    }
-
-    100% {
-        opacity: 0.05;
-        background-size: 50px 50px;
-    }
 }
 
 h1,
@@ -143,6 +119,14 @@ a:hover {
     padding: 4rem 1.5rem;
     position: relative;
     z-index: 1;
+    /* CHANGE: Added a background color to prevent animated background from showing through the content. */
+    background-color: var(--bg-color);
+    transition: background-color 0.3s;
+}
+
+/* CHANGE: Added a corresponding background color for dark mode. */
+body.dark .container {
+    background-color: var(--bg-color-dark);
 }
 
 /* 4. Component Styles */
