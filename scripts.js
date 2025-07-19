@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('shooting-stars-canvas');
     const ctx = canvas.getContext('2d');
 
-    let shootingStars = [];
     let floatingMotes = [];
+    let shimmerPoints = [];
+    const GRID_SIZE = 50; // Size of the grid cells in pixels
 
     // --- Theme Toggle Functionality ---
     function applyTheme(theme) {
@@ -39,34 +40,27 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.height = window.innerHeight;
     }
 
-    // NEW: Class for the light mode "Floating Motes" effect
+    // --- Light Mode: Floating Motes ---
     class FloatingMote {
-        constructor() {
-            this.reset();
-        }
-
+        constructor() { this.reset(); }
         reset() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
             this.radius = Math.random() * 1.5 + 0.5;
-            this.speedX = (Math.random() - 0.5) * 0.2; // Slow horizontal drift
-            this.speedY = -Math.random() * 0.3 - 0.1; // Slow upward drift
+            this.speedX = (Math.random() - 0.5) * 0.2;
+            this.speedY = -Math.random() * 0.3 - 0.1;
             this.opacity = Math.random() * 0.5 + 0.2;
         }
-
         update() {
             this.x += this.speedX;
             this.y += this.speedY;
-
-            // Reset if it drifts off-screen
             if (this.y < -this.radius) {
                 this.y = canvas.height + this.radius;
                 this.x = Math.random() * canvas.width;
             }
         }
-
         draw() {
-            const moteColor = 'rgba(74, 93, 80, 0.7)'; // Muted olive color
+            const moteColor = 'rgba(74, 93, 80, 0.7)';
             ctx.save();
             ctx.globalAlpha = this.opacity;
             ctx.fillStyle = moteColor;
@@ -77,74 +71,91 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Class for the dark mode "Shooting Stars" effect
-    class ShootingStar {
-        constructor() {
-            this.reset();
-        }
-
-        reset() {
-            this.length = Math.random() * 80 + 80;
-            this.x = Math.random() * (canvas.width + canvas.height) - canvas.height * 0.5;
-            this.y = Math.random() * -canvas.height * 0.3;
-            this.speed = Math.random() * 4 + 3;
-            this.angle = Math.PI / 4 + (Math.random() - 0.5) * 0.1;
-            this.opacity = Math.random() * 0.4 + 0.5;
-            this.width = Math.random() * 1.2 + 1.2;
-        }
-
-        update() {
-            this.x += Math.cos(this.angle) * this.speed;
-            this.y += Math.sin(this.angle) * this.speed;
-            if (this.x > canvas.width + this.length || this.y > canvas.height + this.length) {
-                this.reset();
-            }
-        }
-
-        draw() {
-            const starColor = 'rgba(143, 188, 143, 0.85)'; // Muted sea green color
-            ctx.save();
-            ctx.globalAlpha = this.opacity;
-            ctx.strokeStyle = starColor;
-            ctx.lineWidth = this.width;
-            ctx.beginPath();
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(
-                this.x - Math.cos(this.angle) * this.length,
-                this.y - Math.sin(this.angle) * this.length
-            );
-            ctx.shadowColor = starColor;
-            ctx.shadowBlur = 16;
-            ctx.stroke();
-            ctx.restore();
-        }
-    }
-
     function createFloatingMotes() {
         floatingMotes = [];
-        const count = 30; // More motes for a gentle, full-screen effect
+        const count = 30;
         for (let i = 0; i < count; i++) {
             floatingMotes.push(new FloatingMote());
         }
     }
 
-    function createShootingStars() {
-        shootingStars = [];
-        const count = 6;
-        for (let i = 0; i < count; i++) {
-            shootingStars.push(new ShootingStar());
+    // --- Dark Mode: Grid Shimmer ---
+    function drawGrid() {
+        ctx.save();
+        ctx.strokeStyle = '#3a443e'; // var(--divider-color-dark)
+        ctx.lineWidth = 0.5;
+        for (let x = 0; x <= canvas.width; x += GRID_SIZE) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvas.height);
+            ctx.stroke();
+        }
+        for (let y = 0; y <= canvas.height; y += GRID_SIZE) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvas.width, y);
+            ctx.stroke();
+        }
+        ctx.restore();
+    }
+
+    class ShimmerPoint {
+        constructor() { this.reset(); }
+        reset() {
+            const col = Math.floor(Math.random() * (canvas.width / GRID_SIZE));
+            const row = Math.floor(Math.random() * (canvas.height / GRID_SIZE));
+            this.x = col * GRID_SIZE;
+            this.y = row * GRID_SIZE;
+            this.opacity = 0;
+            this.maxOpacity = Math.random() * 0.7 + 0.2;
+            this.speed = Math.random() * 0.015 + 0.005;
+            this.fadingIn = true;
+        }
+        update() {
+            if (this.fadingIn) {
+                this.opacity += this.speed;
+                if (this.opacity >= this.maxOpacity) {
+                    this.opacity = this.maxOpacity;
+                    this.fadingIn = false;
+                }
+            } else {
+                this.opacity -= this.speed;
+                if (this.opacity <= 0) {
+                    this.reset(); // Re-assign to a new random point
+                }
+            }
+        }
+        draw() {
+            const shimmerColor = '#8fbc8f'; // var(--accent-color-dark)
+            ctx.save();
+            ctx.globalAlpha = this.opacity;
+            ctx.fillStyle = shimmerColor;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+            ctx.shadowColor = shimmerColor;
+            ctx.shadowBlur = 8;
+            ctx.fill();
+            ctx.restore();
         }
     }
 
-    // --- Animation Loop ---
+    function createShimmerPoints() {
+        shimmerPoints = [];
+        const count = 75;
+        for (let i = 0; i < count; i++) {
+            shimmerPoints.push(new ShimmerPoint());
+        }
+    }
+
+    // --- Main Animation Loop ---
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // UPDATED: Check for theme and draw the correct effect
         if (body.classList.contains('dark')) {
-            shootingStars.forEach(star => {
-                star.update();
-                star.draw();
+            drawGrid();
+            shimmerPoints.forEach(point => {
+                point.update();
+                point.draw();
             });
         } else {
             floatingMotes.forEach(mote => {
@@ -186,14 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const prevBtn = slider.querySelector('.prev');
         const nextBtn = slider.querySelector('.next');
         let currentSlide = 0;
-
         function showSlide(index) {
             slides.forEach((slide, i) => {
                 slide.classList.remove('active');
                 if (i === index) slide.classList.add('active');
             });
         }
-
         if (prevBtn && nextBtn && slides.length > 0) {
             prevBtn.addEventListener('click', () => {
                 currentSlide = (currentSlide - 1 + slides.length) % slides.length;
@@ -228,14 +237,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('resize', () => {
         resizeCanvas();
-        createShootingStars();
-        createFloatingMotes(); // Create both so they're ready for theme switch
+        createFloatingMotes();
+        createShimmerPoints();
     });
 
     // --- Start Everything ---
     initializeTheme();
     resizeCanvas();
-    createShootingStars();
-    createFloatingMotes(); // Create both initially
+    createFloatingMotes();
+    createShimmerPoints();
     animate();
 });
