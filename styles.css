@@ -11,8 +11,7 @@
     --accent-color: #4a5d50;   /* A muted, classic olive green */
     --divider-color: #e9e7e3; /* A soft, warm gray */
     --shadow-color: rgba(74, 93, 80, 0.2); /* A soft shadow color */
-    --grid-color: rgba(74, 93, 80, 0.1); /* Muted olive for grid */
-    --shimmer-color: rgba(74, 93, 80, 0.2);
+    --star-color: rgba(74, 93, 80, 0.7); /* Muted olive for stars */
 
 
     /* Dark Mode - A complementary, deep forest theme */
@@ -22,8 +21,7 @@
     --accent-color-dark: #8fbc8f;  /* A brighter, but still muted, sea green */
     --divider-color-dark: #3a443e; /* The primary light text color becomes the divider */
     --shadow-color-dark: rgba(143, 188, 143, 0.15); /* A soft shadow color for dark mode */
-    --grid-color-dark: rgba(143, 188, 143, 0.1); /* Muted sea green for grid */
-    --shimmer-color-dark: rgba(143, 188, 143, 0.2);
+    --star-color-dark: rgba(143, 188, 143, 0.7); /* Muted sea green for stars */
 
     
     --font-serif: 'Lora', serif;
@@ -48,9 +46,7 @@ body.dark {
     color: var(--text-secondary-dark);
 }
 
-/* NEW: Blueprint Grid Shimmer Effect */
-body::before {
-    content: '';
+#shooting-stars-canvas {
     position: fixed;
     top: 0;
     left: 0;
@@ -58,23 +54,7 @@ body::before {
     height: 100%;
     z-index: -1;
     pointer-events: none;
-    background-image: 
-        linear-gradient(var(--grid-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: shimmer 15s linear infinite;
 }
-body.dark::before {
-    background-image: 
-        linear-gradient(var(--grid-color-dark) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-color-dark) 1px, transparent 1px);
-}
-
-@keyframes shimmer {
-    from { background-position: 0 0; }
-    to { background-position: 100% 100%; }
-}
-
 
 h1, h2, h3 {
     font-family: var(--font-serif);
