@@ -72,7 +72,8 @@ body.dark::after {
             transparent 60%);
 }
 
-#shooting-stars-canvas {
+/* Grid background animation for dark mode */
+.grid-background {
     position: fixed;
     top: 0;
     left: 0;
@@ -80,6 +81,29 @@ body.dark::after {
     height: 100%;
     z-index: -1;
     pointer-events: none;
+    background-size: 50px 50px;
+    background-image:
+        linear-gradient(to right, var(--divider-color-dark) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--divider-color-dark) 1px, transparent 1px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+body.dark .grid-background {
+    opacity: 0.05;
+    animation: grid-fade 2s ease-out;
+}
+
+@keyframes grid-fade {
+    0% {
+        opacity: 0;
+        background-size: 45px 45px;
+    }
+
+    100% {
+        opacity: 0.05;
+        background-size: 50px 50px;
+    }
 }
 
 h1,
