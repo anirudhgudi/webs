@@ -5,25 +5,39 @@
 /* 1. Color and Font Variables */
 :root {
     /* Light Mode - "Parchment & Ink" Theme */
-    --bg-color: #fbfaf8;      /* A very light, warm parchment */
-    --text-primary: #3a3a3a;  /* A strong, warm, near-black for titles */
-    --text-secondary: #7d7d7d;/* A clear, medium-warm gray for text */
-    --accent-color: #4a5d50;   /* A muted, classic olive green */
-    --divider-color: #e9e7e3; /* A soft, warm gray */
-    --shadow-color: rgba(74, 93, 80, 0.2); /* A soft shadow color */
-    --star-color: rgba(74, 93, 80, 0.7); /* Muted olive for stars */
+    --bg-color: #fbfaf8;
+    /* A very light, warm parchment */
+    --text-primary: #3a3a3a;
+    /* A strong, warm, near-black for titles */
+    --text-secondary: #7d7d7d;
+    /* A clear, medium-warm gray for text */
+    --accent-color: #4a5d50;
+    /* A muted, classic olive green */
+    --divider-color: #e9e7e3;
+    /* A soft, warm gray */
+    --shadow-color: rgba(74, 93, 80, 0.2);
+    /* A soft shadow color */
+    --star-color: rgba(74, 93, 80, 0.7);
+    /* Muted olive for stars */
 
 
     /* Dark Mode - A complementary, deep forest theme */
-    --bg-color-dark: #242b27;      /* A deep, desaturated green-slate */
-    --text-primary-dark: #fbfaf8;  /* The parchment color for titles */
-    --text-secondary-dark: #9cb3a4;/* A light, muted green-gray for text */
-    --accent-color-dark: #8fbc8f;  /* A brighter, but still muted, sea green */
-    --divider-color-dark: #3a443e; /* The primary light text color becomes the divider */
-    --shadow-color-dark: rgba(143, 188, 143, 0.15); /* A soft shadow color for dark mode */
-    --star-color-dark: rgba(143, 188, 143, 0.7); /* Muted sea green for stars */
+    --bg-color-dark: #242b27;
+    /* A deep, desaturated green-slate */
+    --text-primary-dark: #fbfaf8;
+    /* The parchment color for titles */
+    --text-secondary-dark: #9cb3a4;
+    /* A light, muted green-gray for text */
+    --accent-color-dark: #8fbc8f;
+    /* A brighter, but still muted, sea green */
+    --divider-color-dark: #3a443e;
+    /* The primary light text color becomes the divider */
+    --shadow-color-dark: rgba(143, 188, 143, 0.15);
+    /* A soft shadow color for dark mode */
+    --star-color-dark: rgba(143, 188, 143, 0.7);
+    /* Muted sea green for stars */
 
-    
+
     --font-serif: 'Lora', serif;
     --font-sans: 'Source Sans 3', sans-serif;
 }
@@ -56,12 +70,17 @@ body.dark {
     pointer-events: none;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: var(--font-serif);
     color: var(--text-primary);
     font-weight: 700;
 }
-body.dark h1, body.dark h2, body.dark h3 {
+
+body.dark h1,
+body.dark h2,
+body.dark h3 {
     color: var(--text-primary-dark);
 }
 
@@ -71,9 +90,11 @@ a {
     text-decoration: none;
     transition: color 0.2s;
 }
+
 body.dark a {
     color: var(--accent-color-dark);
 }
+
 a:hover {
     text-decoration: underline;
 }
@@ -147,9 +168,11 @@ a:hover {
     .header-layout {
         flex-direction: column;
     }
+
     .header-text {
         text-align: center;
     }
+
     .profile-image-container {
         order: -1;
         margin-bottom: 1.5rem;
@@ -166,6 +189,7 @@ a:hover {
     font-size: 1.25rem;
     color: var(--text-secondary);
 }
+
 body.dark .subtitle {
     color: var(--text-secondary-dark);
 }
@@ -183,6 +207,7 @@ body.dark .subtitle {
     flex-wrap: wrap;
     gap: 1.5rem;
 }
+
 @media (max-width: 768px) {
     .links-bar {
         justify-content: center;
@@ -198,12 +223,15 @@ body.dark .subtitle {
     border-radius: 9999px;
     transition: color 0.2s, background-color 0.2s;
 }
+
 .theme-toggle-button:hover {
     background-color: var(--divider-color);
 }
+
 body.dark .theme-toggle-button {
     color: var(--text-secondary-dark);
 }
+
 body.dark .theme-toggle-button:hover {
     background-color: var(--divider-color-dark);
 }
@@ -221,27 +249,30 @@ body.dark .theme-toggle-button:hover {
 .section-divider {
     border-bottom: 1px solid var(--divider-color);
 }
+
 body.dark .section-divider {
-     border-bottom: 1px solid var(--divider-color-dark);
+    border-bottom: 1px solid var(--divider-color-dark);
 }
 
-.content-spacing > * + * {
+.content-spacing>*+* {
     margin-top: 2rem;
 }
 
-.job-title, .degree-title {
+.job-title,
+.degree-title {
     font-size: 1.25rem;
 }
 
 .meta-text {
     color: var(--text-secondary);
 }
+
 body.dark .meta-text {
     color: var(--text-secondary-dark);
 }
 
 .description-text {
-     margin-top: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .footer {
@@ -250,6 +281,7 @@ body.dark .meta-text {
     margin-top: 2rem;
     border-top: 1px solid var(--divider-color);
 }
+
 body.dark .footer {
     border-top: 1px solid var(--divider-color-dark);
 }
@@ -258,6 +290,7 @@ body.dark .footer {
     font-size: 0.875rem;
     color: var(--text-secondary);
 }
+
 body.dark .footer-text {
     color: var(--text-secondary-dark);
 }
@@ -302,6 +335,7 @@ body.dark .footer-text {
     border-left: 2px solid var(--divider-color);
     padding-left: 1rem;
 }
+
 body.dark .project-nav-item a {
     color: var(--text-secondary-dark);
     border-left-color: var(--divider-color-dark);
@@ -312,6 +346,7 @@ body.dark .project-nav-item a {
     transform: translateX(5px);
     border-left-color: var(--accent-color);
 }
+
 body.dark .project-nav-item a.active {
     color: var(--text-primary-dark);
     border-left-color: var(--accent-color-dark);
@@ -322,6 +357,7 @@ body.dark .project-nav-item a.active {
     opacity: 0.5;
     transition: opacity 0.4s;
 }
+
 .project-detail-item:last-child {
     padding-bottom: 20vh;
 }
@@ -332,7 +368,7 @@ body.dark .project-nav-item a.active {
     display: block;
     object-fit: cover;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
     image-rendering: high-quality;
@@ -375,7 +411,8 @@ body.dark .project-detail-item.is-visible .project-media-slider {
     opacity: 1;
 }
 
-.slide img, .slide video {
+.slide img,
+.slide video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -404,6 +441,7 @@ body.dark .project-detail-item.is-visible .project-media-slider {
 .slide-nav-btn.prev {
     left: 0.5rem;
 }
+
 .slide-nav-btn.next {
     right: 0.5rem;
 }
@@ -427,15 +465,18 @@ body.dark .project-detail-item.is-visible .project-media-slider {
     border-radius: 9999px;
     transition: background-color 0.2s, color 0.2s;
 }
+
 .project-link-button:hover {
     background-color: var(--accent-color);
     color: var(--bg-color);
     text-decoration: none;
 }
+
 body.dark .project-link-button {
     background-color: var(--divider-color-dark);
     color: var(--text-secondary-dark);
 }
+
 body.dark .project-link-button:hover {
     background-color: var(--accent-color-dark);
     color: var(--bg-color-dark);
@@ -445,6 +486,7 @@ body.dark .project-link-button:hover {
     display: grid;
     gap: 2rem;
 }
+
 @media (min-width: 768px) {
     .skills-layout {
         grid-template-columns: 1fr 1fr;
@@ -458,6 +500,7 @@ body.dark .project-link-button:hover {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--divider-color);
 }
+
 body.dark .skills-subtitle {
     border-bottom-color: var(--divider-color-dark);
 }
@@ -486,6 +529,7 @@ body.dark .skills-subtitle {
     border: 1px solid var(--divider-color);
     border-radius: 0.5rem;
 }
+
 body.dark .extra-curricular-item {
     background-color: var(--bg-color-dark);
     border-color: var(--divider-color-dark);
@@ -503,13 +547,14 @@ body.dark .extra-curricular-item {
     object-fit: cover;
     border-radius: 0.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .photo-item:hover img {
     transform: scale(1.03);
     box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
 }
+
 body.dark .photo-item:hover img {
     box-shadow: 0 10px 15px -3px var(--shadow-color-dark), 0 4px 6px -2px var(--shadow-color-dark);
 }
