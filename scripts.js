@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const moonIcon = document.getElementById('theme-icon-moon');
     const canvas = document.getElementById('shooting-stars-canvas');
     const ctx = canvas.getContext('2d');
-
+    
     let floatingMotes = [];
     let shimmerPoints = [];
     const GRID_SIZE = 50; // Size of the grid cells in pixels
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.restore();
         }
     }
-
+    
     function createShimmerPoints() {
         shimmerPoints = [];
         const count = 75;
