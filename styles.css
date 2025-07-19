@@ -6,36 +6,26 @@
 :root {
     /* Light Mode - "Parchment & Ink" Theme */
     --bg-color: #fbfaf8;
-    /* A very light, warm parchment */
     --text-primary: #3a3a3a;
-    /* A strong, warm, near-black for titles */
     --text-secondary: #7d7d7d;
-    /* A clear, medium-warm gray for text */
     --accent-color: #4a5d50;
-    /* A muted, classic olive green */
     --divider-color: #e9e7e3;
-    /* A soft, warm gray */
     --shadow-color: rgba(74, 93, 80, 0.2);
-    /* A soft shadow color */
     --star-color: rgba(74, 93, 80, 0.7);
-    /* Muted olive for stars */
+    /* NEW: Spotlight color for light theme */
+    --spotlight-color: rgba(0, 0, 0, 0.04);
 
 
     /* Dark Mode - A complementary, deep forest theme */
     --bg-color-dark: #242b27;
-    /* A deep, desaturated green-slate */
     --text-primary-dark: #fbfaf8;
-    /* The parchment color for titles */
     --text-secondary-dark: #9cb3a4;
-    /* A light, muted green-gray for text */
     --accent-color-dark: #8fbc8f;
-    /* A brighter, but still muted, sea green */
     --divider-color-dark: #3a443e;
-    /* The primary light text color becomes the divider */
     --shadow-color-dark: rgba(143, 188, 143, 0.15);
-    /* A soft shadow color for dark mode */
     --star-color-dark: rgba(143, 188, 143, 0.7);
-    /* Muted sea green for stars */
+    /* NEW: Spotlight color for dark theme */
+    --spotlight-color-dark: rgba(255, 255, 255, 0.05);
 
 
     --font-serif: 'Lora', serif;
@@ -58,6 +48,28 @@ body {
 body.dark {
     background-color: var(--bg-color-dark);
     color: var(--text-secondary-dark);
+}
+
+/* NEW: Spotlight effect pseudo-element */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle 350px at var(--cursor-x, -500px) var(--cursor-y, -500px),
+            var(--spotlight-color) 0%,
+            transparent 80%);
+    transition: background 0.2s ease-out;
+}
+
+body.dark::after {
+    background: radial-gradient(circle 350px at var(--cursor-x, -500px) var(--cursor-y, -500px),
+            var(--spotlight-color-dark) 0%,
+            transparent 80%);
 }
 
 #shooting-stars-canvas {
@@ -355,11 +367,16 @@ body.dark .project-nav-item a.active {
 .project-detail-item {
     padding-bottom: 10vh;
     opacity: 0.5;
-    transition: opacity 0.4s;
+    transition: opacity 0.4s, transform 0.4s;
 }
 
 .project-detail-item:last-child {
     padding-bottom: 20vh;
+}
+
+.project-detail-item.is-visible {
+    opacity: 1;
+    transform: scale(1.02);
 }
 
 .project-image {
@@ -375,7 +392,6 @@ body.dark .project-nav-item a.active {
 }
 
 .project-detail-item.is-visible .project-media-slider {
-    transform: scale(1.02);
     box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
 }
 

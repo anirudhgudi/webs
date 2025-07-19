@@ -38,7 +38,67 @@ document.addEventListener('DOMContentLoaded', () => {
             applyTheme(e.matches ? 'dark' : 'light');
         }
     });
-    
+
+    // --- Shooting Stars Effect ---
+    const canvas = document.getElementById('shooting-stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    function createStars() {
+        stars = [];
+        const starCount = 20; // Fewer stars for a minimal look
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1 + 0.5,
+                speed: Math.random() * 0.5 + 0.2,
+                opacity: Math.random() * 0.5 + 0.2,
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const isDark = body.classList.contains('dark');
+        const starColor = isDark ? 'rgba(143, 188, 143, 0.7)' : 'rgba(74, 93, 80, 0.7)';
+
+        stars.forEach(star => {
+            star.x -= star.speed;
+            if (star.x < 0) {
+                star.x = canvas.width;
+            }
+
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fillStyle = starColor;
+            ctx.globalAlpha = star.opacity;
+            ctx.fill();
+        });
+
+        ctx.globalAlpha = 1.0; // Reset global alpha
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        createStars();
+    });
+
+    // --- NEW: Mouse Spotlight Effect ---
+    window.addEventListener('mousemove', (e) => {
+        requestAnimationFrame(() => {
+            body.style.setProperty('--cursor-x', `${e.clientX}px`);
+            body.style.setProperty('--cursor-y', `${e.clientY}px`);
+        });
+    });
+
     // --- Project Logbook Scroll Sync ---
     const projectNavLinks = document.querySelectorAll('.project-nav-item a');
     const projectDetails = document.querySelectorAll('.project-detail-item');
@@ -95,6 +155,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initialize the theme when the page loads
+    // Initialize everything on page load
     initializeTheme();
+    resizeCanvas();
+    createStars();
+    animate();
 });
