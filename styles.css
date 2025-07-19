@@ -119,8 +119,10 @@ a:hover {
 /* 4. Component Styles */
 .profile-image-container {
   position: relative;
-  width: 10rem;
-  height: 10rem;
+  width: 12rem;
+  /* Increased from 10rem */
+  height: 12rem;
+  /* Increased from 10rem */
   margin: 0 auto;
   cursor: pointer;
   flex-shrink: 0;
@@ -170,14 +172,8 @@ a:hover {
 }
 
 .separator-bar {
-  width: 1px;
-  height: 150px;
-  /* Adjust height as needed */
-  background-color: var(--divider-color);
-}
-
-body.dark .separator-bar {
-  background-color: var(--divider-color-dark);
+  display: none;
+  /* Removed the separator bar */
 }
 
 /* Responsive styles for the header */
@@ -188,11 +184,6 @@ body.dark .separator-bar {
 
   .header-text {
     text-align: center;
-  }
-
-  .separator-bar {
-    display: none;
-    /* Hide the bar on mobile */
   }
 
   .profile-image-container {
