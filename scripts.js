@@ -1,8 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Get DOM Elements ---
     const body = document.body;
     const themeToggleButton = document.getElementById('theme-toggle');
     const sunIcon = document.getElementById('theme-icon-sun');
     const moonIcon = document.getElementById('theme-icon-moon');
+    const canvas = document.getElementById('shooting-stars-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let shootingStars = [];
 
     // --- Theme Toggle Functionality ---
     function applyTheme(theme) {
@@ -27,77 +32,73 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    themeToggleButton.addEventListener('click', () => {
-        const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
-        localStorage.setItem('theme', newTheme);
-        applyTheme(newTheme);
-    });
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            applyTheme(e.matches ? 'dark' : 'light');
-        }
-    });
-
-    // --- Shooting Stars Effect ---
-    const canvas = document.getElementById('shooting-stars-canvas');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-
+    // --- Canvas & Star Definitions ---
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     }
 
-    function createStars() {
-        stars = [];
-        const starCount = 20; // Fewer stars for a minimal look
-        for (let i = 0; i < starCount; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 1 + 0.5,
-                speed: Math.random() * 0.5 + 0.2,
-                opacity: Math.random() * 0.5 + 0.2,
-            });
+    class ShootingStar {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.length = Math.random() * 80 + 80;
+            this.x = Math.random() * (canvas.width + canvas.height) - canvas.height * 0.5;
+            this.y = Math.random() * -canvas.height * 0.3;
+            this.speed = Math.random() * 4 + 3;
+            this.angle = Math.PI / 4 + (Math.random() - 0.5) * 0.1;
+            this.opacity = Math.random() * 0.4 + 0.5;
+            this.width = Math.random() * 1.2 + 1.2;
+        }
+
+        update() {
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed;
+            if (this.x > canvas.width + this.length || this.y > canvas.height + this.length) {
+                this.reset();
+            }
+        }
+
+        draw() {
+            const isDark = body.classList.contains('dark');
+            const starColor = isDark ? 'rgba(143, 188, 143, 0.85)' : 'rgba(74, 93, 80, 0.85)';
+
+            ctx.save();
+            ctx.globalAlpha = this.opacity;
+            ctx.strokeStyle = starColor;
+            ctx.lineWidth = this.width;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(
+                this.x - Math.cos(this.angle) * this.length,
+                this.y - Math.sin(this.angle) * this.length
+            );
+            ctx.shadowColor = starColor;
+            ctx.shadowBlur = 16;
+            ctx.stroke();
+            ctx.restore();
         }
     }
 
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const isDark = body.classList.contains('dark');
-        const starColor = isDark ? 'rgba(143, 188, 143, 0.7)' : 'rgba(74, 93, 80, 0.7)';
-
-        stars.forEach(star => {
-            star.x -= star.speed;
-            if (star.x < 0) {
-                star.x = canvas.width;
-            }
-
-            ctx.beginPath();
-            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-            ctx.fillStyle = starColor;
-            ctx.globalAlpha = star.opacity;
-            ctx.fill();
-        });
-
-        ctx.globalAlpha = 1.0; // Reset global alpha
-        requestAnimationFrame(animate);
+    function createShootingStars() {
+        shootingStars = [];
+        const count = 6;
+        for (let i = 0; i < count; i++) {
+            shootingStars.push(new ShootingStar());
+        }
     }
 
-    window.addEventListener('resize', () => {
-        resizeCanvas();
-        createStars();
-    });
-
-    // --- NEW: Mouse Spotlight Effect ---
-    window.addEventListener('mousemove', (e) => {
-        requestAnimationFrame(() => {
-            body.style.setProperty('--cursor-x', `${e.clientX}px`);
-            body.style.setProperty('--cursor-y', `${e.clientY}px`);
+    // --- Animation Loop ---
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        shootingStars.forEach(star => {
+            star.update();
+            star.draw();
         });
-    });
+        requestAnimationFrame(animate);
+    }
 
     // --- Project Logbook Scroll Sync ---
     const projectNavLinks = document.querySelectorAll('.project-nav-item a');
@@ -113,19 +114,22 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             const id = entry.target.getAttribute('id');
             const navLink = document.querySelector(`.project-nav-item a[href="#${id}"]`);
-
-            if (entry.isIntersecting) {
-                projectNavLinks.forEach(link => link.classList.remove('active'));
-                navLink.classList.add('active');
-                entry.target.classList.add('is-visible');
-            } else {
-                navLink.classList.remove('active');
-                entry.target.classList.remove('is-visible');
+            if (navLink) {
+                if (entry.isIntersecting) {
+                    projectNavLinks.forEach(link => link.classList.remove('active'));
+                    navLink.classList.add('active');
+                    entry.target.classList.add('is-visible');
+                } else {
+                    navLink.classList.remove('active');
+                    entry.target.classList.remove('is-visible');
+                }
             }
         });
     }, observerOptions);
 
-    projectDetails.forEach(detail => observer.observe(detail));
+    projectDetails.forEach(detail => {
+        if (detail) observer.observe(detail);
+    });
 
     // --- Project Slideshow Logic ---
     const sliders = document.querySelectorAll('.project-media-slider');
@@ -144,20 +148,47 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        prevBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(currentSlide);
-        });
+        if (prevBtn && nextBtn && slides.length > 0) {
+            prevBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            });
 
-        nextBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            });
+        }
+    });
+
+    // --- Event Listeners & Initialization ---
+    themeToggleButton.addEventListener('click', () => {
+        const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        requestAnimationFrame(() => {
+            body.style.setProperty('--cursor-x', `${e.clientX}px`);
+            body.style.setProperty('--cursor-y', `${e.clientY}px`);
         });
     });
 
-    // Initialize everything on page load
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        createShootingStars();
+    });
+
+    // --- Start Everything ---
     initializeTheme();
     resizeCanvas();
-    createStars();
+    createShootingStars();
     animate();
 });

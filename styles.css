@@ -12,7 +12,7 @@
     --divider-color: #e9e7e3;
     --shadow-color: rgba(74, 93, 80, 0.2);
     --star-color: rgba(74, 93, 80, 0.7);
-    /* NEW: Spotlight color for light theme */
+    /* Spotlight color for light theme */
     --spotlight-color: rgba(0, 0, 0, 0.04);
 
 
@@ -24,7 +24,7 @@
     --divider-color-dark: #3a443e;
     --shadow-color-dark: rgba(143, 188, 143, 0.15);
     --star-color-dark: rgba(143, 188, 143, 0.7);
-    /* NEW: Spotlight color for dark theme */
+    /* Spotlight color for dark theme */
     --spotlight-color-dark: rgba(255, 255, 255, 0.05);
 
 
@@ -50,7 +50,7 @@ body.dark {
     color: var(--text-secondary-dark);
 }
 
-/* NEW: Spotlight effect pseudo-element */
+/* Spotlight effect pseudo-element */
 body::after {
     content: '';
     position: fixed;
@@ -60,14 +60,14 @@ body::after {
     height: 100vh;
     z-index: 0;
     pointer-events: none;
-    background: radial-gradient(circle 350px at var(--cursor-x, -500px) var(--cursor-y, -500px),
+    background: radial-gradient(circle 250px at var(--cursor-x, -300px) var(--cursor-y, -300px),
             var(--spotlight-color) 0%,
             transparent 80%);
     transition: background 0.2s ease-out;
 }
 
 body.dark::after {
-    background: radial-gradient(circle 350px at var(--cursor-x, -500px) var(--cursor-y, -500px),
+    background: radial-gradient(circle 250px at var(--cursor-x, -300px) var(--cursor-y, -300px),
             var(--spotlight-color-dark) 0%,
             transparent 80%);
 }
