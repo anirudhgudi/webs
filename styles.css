@@ -13,7 +13,7 @@
     --shadow-color: rgba(74, 93, 80, 0.2);
     --star-color: rgba(74, 93, 80, 0.7);
     /* NEW: Spotlight color for light theme */
-    --spotlight-color: rgba(0, 0, 0, 0.04);
+    --spotlight-color: rgba(97, 83, 44, 0.03);
 
 
     /* Dark Mode - A complementary, deep forest theme */
@@ -25,7 +25,7 @@
     --shadow-color-dark: rgba(143, 188, 143, 0.15);
     --star-color-dark: rgba(143, 188, 143, 0.7);
     /* NEW: Spotlight color for dark theme */
-    --spotlight-color-dark: rgba(255, 255, 255, 0.05);
+    --spotlight-color-dark: rgba(111, 145, 128, 0.03);
 
 
     --font-serif: 'Lora', serif;
